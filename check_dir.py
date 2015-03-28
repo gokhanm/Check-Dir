@@ -48,6 +48,9 @@ class Check(FileSystemEventHandler):
     def on_created(self, event):
         self.process(event)
 
+    def on_modified(self, event):
+        self.process(event)
+
 
 def lock(process_name):
     lock_socket = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
