@@ -52,12 +52,12 @@ class Check(FileSystemEventHandler):
         self.process(event)
 
 
-def lock(process_name):
-    lock_socket = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
-    try:
-        lock_socket.bind('\0' + process_name)
-    except socket.error:
+def lock(pidfile):
+    pid = str(os.getpid())
+    if os.path.isfile(pidfile):
         sys.exit()
+    else:
+        open(pidfile, 'w').write(pid)
 
 if __name__ == '__main__':
     args = sys.argv[1:]
@@ -66,9 +66,10 @@ if __name__ == '__main__':
     observer.start()
 
     try:
-        lock('check_dir.py')
+        lock('/tmp/check_dir.pid')
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
         observer.stop()
+        os.unlink('/tmp/check_dir.pid')
     observer.join()
