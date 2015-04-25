@@ -1,4 +1,7 @@
 #!/usr/bin/env python3.4
+# Licensed under the GNU General Public License, version 2.
+# See the file http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
+
 __author__ = 'Gokhan MANKARA <gokhan@mankara.org>'
 
 import time
